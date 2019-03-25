@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap/dist/css/bootstrap.min.css">
+    <title>#ThissChat</title>
+    <style>
+        body {
+            background-color: #f3f3f3;
+            height: 100vh;
+        }
+
+        #screen-container {
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            border: 1px solid #d3d3d3;
+            border-radius: 8px;
+        }
+
+        #input-container {
+            display: flex;
+            margin: 16px;
+        }
+
+        #input {
+            border-radius: 8px 0 0 8px;
+        }
+
+        #send {
+            border-radius: 0 8px 8px 0;
+        }
+
+        #messages {
+            flex-grow: 1;
+            padding: 16px;
+            overflow-y: auto;
+        }
+
+        p {
+            display: flex;
+            margin: 4px;
+        }
+
+        .message {
+            background-color: #d3d3d3;
+            color: #fff;
+            word-break: break-all;
+            padding: 8px 16px 8px 16px;
+            display: inline-block;
+            border-radius: 20px;
+            max-width: 60%;
+        }
+
+        .username {
+            word-break: break-all;
+            padding: 8px 16px 8px 16px;
+            display: inline-block;
+            border-radius: 20px;
+            max-width: 60%;
+        }
+
+        .mine {
+            margin-left: auto;
+            text-align: right;
+            background-color: #007bff;
+        }
+
+        .theirs {
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="screen-container" class="container">
+        <div id="messages"></div>
+        <div id="input-container">
+            <input id="input" name="input" autocomplete="off" class="form-control">
+            <button id="send" onclick="send()" class="btn btn-primary">Send</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        var username = 'Anonymous';
+
+        socket.on('message', message => {
+            $('#messages').append(
+                $('<p>').append(
+                    $('<span>')
+                        .addClass('username')
+                        .text(message.sender)
+                ).append(
+                    $('<span>')
+                        .addClass('message')
+                        .addClass('theirs')
+                        .text(message.text)
+                    )
+            );
+            updateScroll();
+        });
+
+        socket.on('name', name => {
+            username = name;
+        });
+
+        $('#input').keydown((e) => {
+            if (e.which === 13)
+                send();
+        });
+
+        $(document.body).click((e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            $('#input').focus();
+        })
+
+        function updateScroll() {
+            var element = document.getElementById("messages");
+            element.scrollTop = element.scrollHeight;
+        }
+
+        function send() {
+            var input = $('#input');
+            var val = input.val().trim();
+            if (val === '') return;
+
+            $('#messages').append(
+                $('<p>').append(
+                    $('<span>')
+                        .addClass('message')
+                        .addClass('mine')
+                        .text(val)
+                )
+            );
+            updateScroll();
+
+            socket.emit('message', {
+                sender: username,
+                text: val
+            });
+            input.val('');
+        }
+    </script>
+</body>
+
+</html>

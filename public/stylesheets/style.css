@@ -5,6 +5,15 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+#name-header {
+  width: 100%;
+  text-align: right;
+}
+
+#name {
+  font-weight: bold;
+}
+
 #screen-container {
   height: 100%;
   background-color: #fff;

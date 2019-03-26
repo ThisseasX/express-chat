@@ -19,6 +19,7 @@ socket.on('message', message => {
 
 socket.on('name', name => {
     username = name;
+    $('#name').text(name);
 });
 
 $('#input').keydown((e) => {

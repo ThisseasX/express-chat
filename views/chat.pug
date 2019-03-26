@@ -7,12 +7,19 @@ html(lang="en")
         link(rel="stylesheet", href="/css/bootstrap.min.css")
         link(rel="stylesheet", href="/stylesheets/style.css")
         title #ThissChat
+
     body
+        #name-container.container
+            h6#name-header Welcome
+                |
+                |
+                span#name
         #screen-container.container
             #messages
             #input-container
                 input#input.form-control(name="input" autocomplete="off")
                 button#send.btn.btn-primary(onclick="send()") Send
+
     script(src="/javascripts/lib/jquery.js")
     script(src="/javascripts/lib/socket.io.js")
     script(src="/javascripts/chat.js")

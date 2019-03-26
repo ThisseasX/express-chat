@@ -3,9 +3,13 @@ var path = require('path');
 var app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'node_modules', 'bootstrap', 'dist')));
 
-app.all(/^\/.*$/, (req, res) => {
-  res.sendFile(path.join(__dirname, 'pages', 'chat.html'))
+app.set('views', './views');
+app.set('view engine', 'pug');
+
+app.get('/', (req, res) => {
+  res.render('chat');
 })
 
 module.exports = app;

@@ -1,8 +1,68 @@
 body {
+  background-color: #f3f3f3;
+  height: 100vh;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+#screen-container {
+  height: 100%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border: 1px solid #d3d3d3;
+  border-radius: 8px;
+}
+
+#input-container {
+  display: flex;
+  margin: 16px;
+}
+
+#input {
+  border-radius: 8px 0 0 8px;
+}
+
+#send {
+  border-radius: 0 8px 8px 0;
+}
+
+#messages {
+  flex-grow: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+p {
+  display: flex;
+  margin: 4px;
+}
+
+.message {
+  background-color: #d3d3d3;
+  color: #fff;
+  word-break: break-all;
+  padding: 8px 16px 8px 16px;
+  display: inline-block;
+  border-radius: 20px;
+  max-width: 60%;
+}
+
+.username {
+  word-break: break-all;
+  padding: 8px 16px 8px 16px;
+  display: inline-block;
+  border-radius: 20px;
+  max-width: 60%;
+}
+
+.mine {
+  margin-left: auto;
+  text-align: right;
+  background-color: #007bff;
+}
+
+.theirs {
+  color: #000;
 }
